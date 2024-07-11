@@ -114,3 +114,69 @@ create table EmailDistribuidor (
         foreign key (codigoDistribuidor)
             references Distribuidores(codigoProveedor)
 );
+
+create table Empleados (
+    codigoEmpleado int not null,
+    nombresEmpleado varchar(50) not null,
+    apellidosEmpleado varchar(50) not null,
+    sueldo decimal(10,2) not null,
+    direccionEmpleado varchar(150) not null,
+    codigoCargoEmpleado int not null,
+    primary key (codigoEmpleado),
+    constraint FK_Empleados_CargoEmpleado
+        foreign key (codigoCargoEmpleado)
+            references CargoEmpleado(codigoCargoEmpleado)
+);
+
+create table Factura (
+    numeroFactura int not null,
+    estado varchar(50) not null,
+    totalFactura decimal(10,2) default 0.00,
+    fechaFactura date not null,
+    codigoCliente int not null,
+    codigoEmpleado int not null,
+    primary key (numeroFactura),
+    constraint FK_Factura_Clientes
+        foreign key (codigoCliente)
+            references Clientes(codigoCliente),
+    constraint FK_Factura_Empleados
+        foreign key (codigoEmpleado)
+            references Empleados(codigoEmpleado)
+);
+
+create table DetalleFactura (
+    codigoDetalleFactura int not null auto_increment,
+    precioUnitario decimal(10,2) default 0.00,
+    cantidad int not null,
+    numeroFactura int not null,
+    codigoProducto varchar(15) not null,
+    primary key (codigoDetalleFactura),
+    constraint FK_DetalleFactura_Factura foreign key (numeroFactura)
+        references Factura (numeroFactura),
+    constraint FK_DetalleFactura_Productos foreign key (codigoProducto)
+        references Productos (codigoProducto)
+);
+
+create table TipoUsuario (
+    codigoTipoUsuario int not null auto_increment,
+    tipoUsuario varchar(20) not null,
+    primary key (codigoTipoUsuario)
+);
+
+create table Usuario (
+    codigoUsuario int not null auto_increment,
+    nombreUsuario varchar(100) not null,
+    apellidoUsuario varchar(100) not null,
+    usuarioLogin varchar(50) not null,
+    contrasena varchar(50) not null,
+    codigoTipoUsuario int not null,
+    primary key (codigoUsuario),
+    constraint FK_Usuario_TipoUsuario foreign key (codigoTipoUsuario)
+        references TipoUsuario(codigoTipoUsuario)
+);
+
+create table Login (
+    usuarioMaster varchar(50) not null,
+    passwordLogin varchar(50) not null,
+    primary key (usuarioMaster)
+);
