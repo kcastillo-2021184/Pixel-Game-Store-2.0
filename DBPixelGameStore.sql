@@ -174,9 +174,3 @@ create table Usuario (
     constraint FK_Usuario_TipoUsuario foreign key (codigoTipoUsuario)
         references TipoUsuario(codigoTipoUsuario)
 );
-
-create table Login (
-    usuarioMaster varchar(50) not null,
-    passwordLogin varchar(50) not null,
-    primary key (usuarioMaster)
-);
