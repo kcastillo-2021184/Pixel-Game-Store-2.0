@@ -162,3 +162,15 @@ create table TipoUsuario (
     tipoUsuario varchar(20) not null,
     primary key (codigoTipoUsuario)
 );
+
+create table Usuario (
+    codigoUsuario int not null auto_increment,
+    nombreUsuario varchar(100) not null,
+    apellidoUsuario varchar(100) not null,
+    usuarioLogin varchar(50) not null,
+    contrasena varchar(50) not null,
+    codigoTipoUsuario int not null,
+    primary key (codigoUsuario),
+    constraint FK_Usuario_TipoUsuario foreign key (codigoTipoUsuario)
+        references TipoUsuario(codigoTipoUsuario)
+);
