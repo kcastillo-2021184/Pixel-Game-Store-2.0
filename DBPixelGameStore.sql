@@ -175,6 +175,10 @@ create table Usuario (
         references TipoUsuario(codigoTipoUsuario)
 );
 
+insert into TipoUsuario(tipoUsuario) values('Administrador');
+insert into TipoUsuario(tipoUsuario) values('Empleado');
+insert into TipoUsuario(tipoUsuario) values('Cliente');
+
 insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
     values ('Admin', 'admin', 'admin2024', 'admin123' , '1');
 insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
