@@ -1,7 +1,6 @@
 package modelo;
 
-public class DetalleFacturaDAO {
 
-    
+public class DetalleFacturaDAO {
     
 }

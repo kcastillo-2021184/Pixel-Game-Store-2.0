@@ -1,17 +1,17 @@
+
 package modelo;
 
 public class DetalleFactura {
-  
     private int codigoDetalleFactura;
-    private double precioUnitario;
+    private Double precioUnitario;
     private int cantidad;
     private int numeroFactura;
     private String codigoProducto;
 
     public DetalleFactura() {
     }
-    
-    public DetalleFactura(int codigoDetalleFactura, double precioUnitario, int cantidad, int numeroFactura, String codigoProducto) {
+
+    public DetalleFactura(int codigoDetalleFactura, Double precioUnitario, int cantidad, int numeroFactura, String codigoProducto) {
         this.codigoDetalleFactura = codigoDetalleFactura;
         this.precioUnitario = precioUnitario;
         this.cantidad = cantidad;
@@ -27,11 +27,11 @@ public class DetalleFactura {
         this.codigoDetalleFactura = codigoDetalleFactura;
     }
 
-    public double getPrecioUnitario() {
+    public Double getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(double precioUnitario) {
+    public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
@@ -59,6 +59,5 @@ public class DetalleFactura {
         this.codigoProducto = codigoProducto;
     }
     
+    
 }
-
-
