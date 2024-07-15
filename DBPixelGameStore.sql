@@ -174,3 +174,39 @@ create table Usuario (
     constraint FK_Usuario_TipoUsuario foreign key (codigoTipoUsuario)
         references TipoUsuario(codigoTipoUsuario)
 );
+
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Admin', 'admin', 'admin2024', 'admin123' , '1');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Pedro', 'Armas', 'parmas', 'admin123', '1');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('José', 'Aceituno', 'jaceituno-2020037', 2020037, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Julio', 'Alvarado', 'jalvarado-2021353', 2021353, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Jose', 'Arrecis', 'jarrecis-2020444', 2020444, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('José', 'Aceituno', 'jaceituno-2020037', 2020037, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Juan', 'Barrera', 'jbarrera-2020316', 2020316, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Christopher', 'Barrera', 'cbarrera-2020306', 2020306, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Miguel', 'Bautista', 'mbautista-2020375', 2020375, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Alexander', 'Borja', 'aborja-2020413', 2020413, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Diego', 'Caal', 'dcaal-2020531', 2020531, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Jorge', 'Castellanos', 'jcastellanos-2020387', 2020387, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Diego', 'Caal', 'dcaal-2020531', 2020531, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Jorge', 'Castellanos', 'jcastellanos-2020387', 2020387, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Kevin', 'Castillo', 'kcastillo-2021184', 2021184, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Hettson', 'Ceballos', 'hceballos-2020415', 2020415, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Andrés', 'Coloma', 'acoloma-2023009', 2020009, '2');
+
