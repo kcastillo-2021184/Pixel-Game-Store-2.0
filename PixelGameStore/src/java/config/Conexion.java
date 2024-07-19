@@ -3,15 +3,15 @@ package config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class Conexion {
 
+public class Conexion {
     Connection conexion;
     
     public Connection Conexion(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/DBPixelGameStore?userSSL=flase", "root","admin");
-        }catch (Exception e){
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/DBPixelGameStore?useSSL=false", "root", "admin");
+        }catch(Exception e){
             e.printStackTrace();
         }
         return conexion;
