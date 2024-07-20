@@ -1,5 +1,6 @@
 package modelo;
 
+
 public class Usuario {
     private int codigoUsuario;
     private String nombreUsuario;
@@ -67,7 +68,6 @@ public class Usuario {
     public void setCodigoTipoUsuario(int codigoTipoUsuario) {
         this.codigoTipoUsuario = codigoTipoUsuario;
     }
-    
     
     
 }
