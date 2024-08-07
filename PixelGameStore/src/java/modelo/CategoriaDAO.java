@@ -77,13 +77,14 @@ public class CategoriaDAO {
     
     //ACTUALIZAR
     public int actualizar(Categoria cat){
-        String sql = "update Categora set nombreCategoria =?, descripcionCategoria=?, localizacionCategoria=? where codigoCategoria =?";
+        String sql = "update Categoria set nombreCategoria =?, descripcionCategoria=?, localizacionCategoria=? where codigoCategoria =?";
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             ps.setString(1, cat.getNombreCategoria());
             ps.setString(2, cat.getDescripcionCategoria());
             ps.setString(3, cat.getLocalizacionCategoria());
+            ps.setInt(4, cat.getCodigoCategoria());
             ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
