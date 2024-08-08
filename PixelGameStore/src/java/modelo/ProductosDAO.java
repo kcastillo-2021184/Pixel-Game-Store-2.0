@@ -1,197 +1,206 @@
 package modelo;
 
 import config.Conexion;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 public class ProductosDAO {
-    Conexion cn = new Conexion();
-    Connection con;
-    PreparedStatement ps;
-    ResultSet rs;
-    int resp;
-    
-    //Convertir blob a arreglo de bytes
-    public byte[] blobABytes(Blob blob){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try(ByteArrayInputStream inputStream = (ByteArrayInputStream) blob.getBinaryStream()){
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while((bytesRead = inputStream.read(buffer)) != -1){
-                baos.write(buffer, 0, bytesRead);
+    Conexion cn = new Conexion(); // Configuración de conexión
+    Connection con; // Conexión SQL
+    PreparedStatement ps; // PreparedStatement
+    ResultSet rs; // ResultSet
+
+    // Método para listar todos los productos
+    public List<Productos> listar() {
+    List<Productos> listaProductos = new ArrayList<>();
+    String sql = "SELECT * FROM Productos";
+    try {
+        con = cn.Conexion();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Productos producto = new Productos();
+            producto.setCodigoProducto(rs.getString("codigoProducto"));
+            producto.setDescripcionProducto(rs.getString("descripcionProducto"));
+            producto.setPrecioUnitario(rs.getDouble("precioUnitario"));
+            producto.setPrecioDocena(rs.getDouble("precioDocena"));
+            producto.setPrecioMayor(rs.getDouble("precioMayor"));
+            producto.setExistencia(rs.getInt("existencia"));
+            producto.setCodigoCategoria(rs.getInt("codigoCategoria"));
+            producto.setCodigoDistribuidor(rs.getInt("codigoDistribuidor"));
+
+            Blob blob = rs.getBlob("vistaPrevia");
+            if (blob != null) {
+                byte[] bytesDeImagen;
+                InputStream entrada;
+                int bytesLeidos;
+                byte[] buffer = new byte[104857600];
+                ByteArrayOutputStream salida = new ByteArrayOutputStream(); 
+
+                entrada = blob.getBinaryStream();
+                while((bytesLeidos = entrada.read(buffer)) != -1) {
+                    salida.write(buffer, 0, bytesLeidos);
+                }
+                bytesDeImagen = salida.toByteArray();
+                
+                producto.setVistaPrevia(bytesDeImagen);
+                producto.setVistaPreviaCadena(Base64.getEncoder().encodeToString(bytesDeImagen));
+            } else {
+                // Si no hay imagen, puedes asignar un valor por defecto o dejar el campo vacío
+                producto.setVistaPrevia(null);
+                producto.setVistaPreviaCadena(null);
             }
-        }catch(Exception e){
-            e.printStackTrace();
+            listaProductos.add(producto);
         }
-        return baos.toByteArray();
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
-    
-    
-    //Convertir arreglo de bytes a blob
-    public Blob obtenerBlobDeByteArray(byte[] imagenBytes){
-        try{
-            Blob blob = cn.Conexion().createBlob();
-            if(imagenBytes != null){
-                blob.setBytes(1, imagenBytes);
-            }else {
-                return null;
-            }
-            return blob;
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-    
-    //Convertir arreglo de bytes a Imagen
-    public Image bytesAImagen(byte[] bytes){
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        BufferedImage image = null;
-        try{
-            image = ImageIO.read(bais);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return image;
-    }
-    
-    //Listar Productos
-    public List<Productos> Listar(){
-        String sql = "select * from productos";
-        List<Productos> listaProductos = new ArrayList<>();
-        try{
+    return listaProductos;
+}
+
+    // Método para buscar un producto por código
+    public Productos listarCodigoProducto(String codigoProducto) {
+        Productos producto = null;
+        String sql = "SELECT * FROM Productos WHERE codigoProducto = ?";
+        try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
+            ps.setString(1, codigoProducto);
             rs = ps.executeQuery();
-            while(rs.next()){
-                Productos producto = new Productos();
-                producto.setCodigoProducto(rs.getString(1));
-                producto.setDescripcionProducto(rs.getString(2));
-                producto.setPrecioUnitario(rs.getDouble(3));
-                producto.setPrecioDocena(rs.getDouble(4));
-                producto.setPrecioMayor(rs.getDouble(5));
-                producto.setVistaPrevia(blobABytes(rs.getBlob(6)));
-                producto.setExistencia(rs.getInt(7));
-                producto.setCodigoCategoria(rs.getInt(8));
-                producto.setCodigoDistribuidor(rs.getInt(9));
-                listaProductos.add(producto);
+            if (rs.next()) {
+                producto = new Productos();
+                producto.setCodigoProducto(rs.getString("codigoProducto"));
+                producto.setDescripcionProducto(rs.getString("descripcionProducto"));
+                producto.setPrecioUnitario(rs.getDouble("precioUnitario"));
+                producto.setPrecioDocena(rs.getDouble("precioDocena"));
+                producto.setPrecioMayor(rs.getDouble("precioMayor"));
+                producto.setExistencia(rs.getInt("existencia"));
+                producto.setCodigoCategoria(rs.getInt("codigoCategoria"));
+                producto.setCodigoDistribuidor(rs.getInt("codigoDistribuidor"));
+                
+                byte[] bytesDeImagen;
+                InputStream entrada;
+                Blob blob;
+                int bytesLeidos;
+                byte[] buffer = new byte[104857600];
+                ByteArrayOutputStream salida = new ByteArrayOutputStream(); 
+
+                blob = rs.getBlob("vistaPrevia");
+                
+                entrada = blob.getBinaryStream();
+                while((bytesLeidos = entrada.read(buffer))!=-1){
+                    salida.write(buffer, 0, bytesLeidos);
+                }
+                bytesDeImagen = salida.toByteArray();
+                
+                producto.setVistaPrevia(Base64.getEncoder().encode(blobToBytes(rs.getBlob("vistaPrevia"))));
+                producto.setVistaPreviaCadena(Base64.getEncoder().encodeToString(blobToBytes(rs.getBlob("vistaPrevia"))));
+                
+                producto.setVistaPrevia(bytesDeImagen);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
-            cerrarRecursos();
-        }
-        return listaProductos;
-    }
-    
-    //Agregar
-    public int agregar(Productos prod){
-        String sql = "insert into productos (codigoProducto, descripcionProducto, precioUnitario, precioDocena, precioMayor, vistaPrevia, existencia, codigoCategoria, codigoDistribuidor) values (?,?,?,?,?,?,?,?,?)";
-        try{
-            con = cn.Conexion();
-            ps = con.prepareStatement(sql);
-            ps.setString(1, prod.getCodigoProducto());
-            ps.setString(2, prod.getDescripcionProducto());
-            ps.setDouble(3, prod.getPrecioUnitario());
-            ps.setDouble(4, prod.getPrecioDocena());
-            ps.setDouble(5, prod.getPrecioMayor());
-            ps.setBlob(6, obtenerBlobDeByteArray(prod.getVistaPrevia()));
-            ps.setInt(7, prod.getExistencia());
-            ps.setInt(8, prod.getCodigoCategoria());
-            ps.setInt(9, prod.getCodigoDistribuidor());
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            cerrarRecursos();
-        }
-        return resp;
-    }
-    
-    //Buscar por Codigo
-    public Productos listarPorCodigoProducto(String codigo){
-        Productos producto = new Productos();
-        String sql = "select * from productos where codigoProducto = ?";
-        try{
-            con = cn.Conexion();
-            ps = con.prepareStatement(sql);
-            ps.setString(1, codigo);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                producto.setCodigoProducto(rs.getString(1));
-                producto.setDescripcionProducto(rs.getString(2));
-                producto.setPrecioUnitario(rs.getDouble(3));
-                producto.setPrecioDocena(rs.getDouble(4));
-                producto.setPrecioMayor(rs.getDouble(5));
-                producto.setVistaPrevia(blobABytes(rs.getBlob(6)));
-                producto.setExistencia(rs.getInt(7));
-                producto.setCodigoCategoria(rs.getInt(8));
-                producto.setCodigoDistribuidor(rs.getInt(9));
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            cerrarRecursos();
         }
         return producto;
     }
-    
-    //Actualizar
-    public int actualizar(Productos prod){
-        String sql = "update productos set descripcionProducto = ?, precioUnitario = ?, precioDocena = ?, precioMayor = ?, vistaPrevia = ?, existencia = ?, codigoCategoria = ?, codigoDistribuidor = ? where codigoProducto = ?";
-        try{
+
+    // Método para agregar un nuevo producto
+    public int agregar(Productos producto) throws IOException {
+        String sql = "INSERT INTO Productos (codigoProducto, descripcionProducto, codigoCategoria, codigoDistribuidor, vistaPrevia) VALUES (?, ?, ?, ?, ?)";
+        int resp = 0;
+        try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setString(1, prod.getDescripcionProducto());
-            ps.setDouble(2, prod.getPrecioUnitario());
-            ps.setDouble(3, prod.getPrecioDocena());
-            ps.setDouble(4, prod.getPrecioMayor());
-            ps.setBlob(5, obtenerBlobDeByteArray(prod.getVistaPrevia()));
-            ps.setInt(6, prod.getExistencia());
-            ps.setInt(7, prod.getCodigoCategoria());
-            ps.setInt(8, prod.getCodigoDistribuidor());
-            ps.setString(9, prod.getCodigoProducto());
-        }catch(Exception e){
+            ps.setString(1, producto.getCodigoProducto());
+            ps.setString(2, producto.getDescripcionProducto());
+            ps.setInt(3, producto.getCodigoCategoria());
+            ps.setInt(4, producto.getCodigoDistribuidor());
+            ps.setBlob(5, bytesToBlob(con,producto.getVistaPrevia()));
+            resp = ps.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            cerrarRecursos();
         }
-        
+        return resp;
+    }
+
+    // Método para actualizar un producto
+    public int actualizar(Productos producto) throws IOException {
+        String sql = "UPDATE Productos SET descripcionProducto = ?, precioUnitario = ?, precioDocena = ?, precioMayor = ?, existencia = ?, codigoCategoria = ?, codigoDistribuidor = ?, vistaPrevia = ? WHERE codigoProducto = ?";
+        int resp = 0;
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, producto.getDescripcionProducto());
+            ps.setDouble(2, producto.getPrecioUnitario());
+            ps.setDouble(3, producto.getPrecioDocena());
+            ps.setDouble(4, producto.getPrecioMayor());
+            ps.setInt(5, producto.getExistencia());
+            ps.setInt(6, producto.getCodigoCategoria());
+            ps.setInt(7, producto.getCodigoDistribuidor());
+            ps.setBlob(8, bytesToBlob(con,producto.getVistaPrevia()));
+            ps.setString(9, producto.getCodigoProducto());
+            resp = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resp;
+    }
+
+    // Método para eliminar un producto por código
+    public int eliminar(String codigoProducto) {
+        String sql = "DELETE FROM Productos WHERE codigoProducto = ?";
+        int resp = 0;
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, codigoProducto);
+            resp = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return resp;
     }
     
-    //Eliminar
-    public void eliminar(String codigo){
-        String sql = "delete from productos where codigoProducto = ?";
-        try{
-            con = cn.Conexion();
-            ps = con.prepareStatement(sql);
-            ps.setString(1, codigo);
-            ps.executeUpdate();
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            cerrarRecursos();
+    
+    public static byte[] blobToBytes(Blob blob) throws SQLException, IOException {
+        if (blob == null) {
+            return new byte[0];
+        }
+        
+        try (InputStream inputStream = blob.getBinaryStream()) {
+            long blobLength = blob.length();
+            byte[] bytes = new byte[(int) blobLength];
+            int bytesRead = 0;
+            int read;
+            while ((read = inputStream.read(bytes, bytesRead, bytes.length - bytesRead)) != -1) {
+                bytesRead += read;
+            }
+            return bytes;
         }
     }
     
-    //cerrar recursos
-    private void cerrarRecursos(){
-        try {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (con != null) con.close();
-        }catch (SQLException e){
-            e.printStackTrace();
+    public static Blob bytesToBlob(Connection connection, byte[] bytes) throws SQLException, IOException {
+        if (bytes == null || bytes.length == 0) {
+            return null;
         }
+
+        // Crear un Blob en la base de datos
+        Blob blob = connection.createBlob();
+        try (InputStream inputStream = new ByteArrayInputStream(bytes)) {
+            blob.setBytes(1, bytes);
+        }
+
+        return blob;
     }
 }
