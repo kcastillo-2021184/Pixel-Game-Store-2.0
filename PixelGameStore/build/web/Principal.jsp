@@ -22,6 +22,12 @@
                 <li class="nav-item">
                     <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=EmailDistribuidor&accion=Listar" target="myFrame">Email Distribuidor</a>
                 </li>
+                <li class="nav-item">
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=CargoEmpleado&accion=Listar" target="myFrame">Cargo Empleado</a>
+                </li>
+                <li class="nav-item">
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Distribuidores&accion=Listar" target="myFrame">Distribuidores</a>
+                </li>
               </ul>
             </div>
             <div class="dropdown">
