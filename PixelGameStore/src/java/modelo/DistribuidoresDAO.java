@@ -25,7 +25,7 @@ public class DistribuidoresDAO {
             rs = ps.executeQuery();
             while(rs.next()){
                 Distribuidores distribuidor = new Distribuidores();
-                distribuidor.setCodigoDistribuidor(rs.getInt("codigoDistribuidor"));
+                distribuidor.setCodigoDistribuidor(rs.getInt("codigoProveedor"));
                 distribuidor.setNombreDistribuidor(rs.getString("nombreDistribuidor"));
                 distribuidor.setDireccionDistribuidor(rs.getString("direccionDistribuidor"));
                 distribuidor.setCodigoPostal(rs.getString("codigoPostal"));
@@ -58,13 +58,13 @@ public class DistribuidoresDAO {
     
     public Distribuidores listarCodigoDistribuidor(int id){
         Distribuidores distribuidor = new Distribuidores();
-        String sql = "select * from distribuidores where codigoDistribuidor = " + id;
+        String sql = "select * from distribuidores where codigoProveedor = " + id;
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                distribuidor.setCodigoDistribuidor(rs.getInt("codigoDistribuidor"));
+                distribuidor.setCodigoDistribuidor(rs.getInt("codigoProveedor"));
                 distribuidor.setNombreDistribuidor(rs.getString("nombreDistribuidor"));
                 distribuidor.setDireccionDistribuidor(rs.getString("direccionDistribuidor"));
                 distribuidor.setCodigoPostal(rs.getString("codigoPostal"));
@@ -82,7 +82,7 @@ public class DistribuidoresDAO {
                 + "direccionDistribuidor = ?, "
                 + "codigoPostal = ?, "
                 + "paginaWeb = ? "
-                + "where codigoDistribuidor = ?";
+                + "where codigoProveedor = ?";
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -100,7 +100,7 @@ public class DistribuidoresDAO {
     }
     
     public void eliminar(int id){
-        String sql = "delete from distribuidores where codigoDistribuidor =" +id;
+        String sql = "delete from distribuidores where codigoProveedor =" +id;
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);

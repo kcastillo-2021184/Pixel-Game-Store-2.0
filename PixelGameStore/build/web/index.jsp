@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Access Page</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+         <link rel="stylesheet" href="PGS.css">
     </head>
     <body>
         <div class="container mt-4 col-lg-4">
@@ -12,16 +13,16 @@
                     <div class="card-body">
                         <form class="form-sign" action="Validar" method="POST">
                             <div class="form-group text-center">
-                                <h3>Login</h3>
-                                <img src="img/Logo.png" alt="70" width="120"/><br>
-                                <label>Bienvenido a PIXEL GAME STORE</label>
+                                <h3><strong>PIXEL GAME STORE</strong></h3>
+                                <img src="img/PGS.png" alt="130" width="180"/><br>
                             </div>
                             <div class="form-group">
-                                <label><strong>Usuario</strong> </label>
+                               <label for="user">Usuario</label>
                                 <input type="text" name ="txtUser" class="form-control">
                             </div>
+                            <div class="mario"></div>
                             <div class="form-group">
-                                <label><strong>Contraseña</strong></label>
+                                <label for="contra">Contraseña</label>
                                 <input type="password" name="txtPass" class="form-control">
                             </div>
                             <input type ="submit" value="Ingresar" name="accion" class="btn btn-primary btn-block">
