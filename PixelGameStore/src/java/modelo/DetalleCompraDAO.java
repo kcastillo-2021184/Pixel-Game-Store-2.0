@@ -46,7 +46,7 @@ public class DetalleCompraDAO {
        try{
            con = cn.Conexion();
            ps = con.prepareStatement(sql);
-           ps.setFloat(1, DC.getCostoUnitario());
+           ps.setDouble(1, DC.getCostoUnitario());
            ps.setInt(2, DC.getCantidad());
            ps.setString(3, DC.getCodigoProducto());
            ps.setInt(4, DC.getNumeroDocumento());
@@ -57,7 +57,7 @@ public class DetalleCompraDAO {
             return resp;
     }
     
-    public DetalleCompra listaCodigoDetalleCompra(int id){
+    public DetalleCompra listarCodigoDetalleCompra(int id){
         DetalleCompra dc = new DetalleCompra();
         String sql = "Select * from DetalleCompra where codigoDetalleCompra ="  +id;
         try{
@@ -81,7 +81,7 @@ public class DetalleCompraDAO {
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setFloat(1, dc.getCostoUnitario());
+            ps.setDouble(1, dc.getCostoUnitario());
             ps.setInt(2, dc.getCantidad());
         }catch(Exception e){
             e.printStackTrace();

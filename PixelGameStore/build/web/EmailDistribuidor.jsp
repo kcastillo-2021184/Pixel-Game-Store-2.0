@@ -1,3 +1,5 @@
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,22 +15,22 @@
                 <form action="Controlador?menu=EmailDistribuidor" method="POST">
                     <div class="form-group">
                         <label><Strong>EMAIL DISTRIBUIDOR:</strong></label>
-                        <input type="text" value="" name="txtEmailDistribuidor" class="from-control">
+                        <input type="text" value="${emailDistribuidor.getEmailDistribuidor()}" name="txtEmailDistribuidor" class="from-control">
                     </div>          
                     
                     <div class="form-group">
                         <label><Strong>DESCRIPCION:</strong></label>
-                        <input type="text" value="" name="txtDescripcion" class="from-control">
+                        <input type="text" value="${emailDistribuidor.getDescripcion()}" name="txtDescripcion" class="from-control">
                     </div>    
                     
                     <div class="form-group">
-                        <label><Strong>HORARIO DE ATENCION:</strong></label>
-                        <input type="text" value="" name="txtHorarioDeAtencion" class="from-control">
+                        <label><Strong>HORARIO DE ATENCIÓN:</strong></label>
+                        <input type="text" value="${emailDistribuidor.getHorarioDeAtencion()}" name="txtHorarioDeAtencion" class="from-control">
                     </div>    
                     
                     <div class="form-group">
                         <label><Strong>CODIGO DISTRIBUIDOR:</strong></label>
-                        <input type="text" value="" name="txtCodigoDistribuidor" class="from-control">
+                        <input type="text" value="${emailDistribuidor.getCodigoDistribuidor()}" name="txtCodigoDistribuidor" class="from-control">
                     </div>    
                     
                     <input type="submit" name="accion" value="Agregar" class="btn btn-info">
@@ -42,28 +44,28 @@
                 <thead>
                     <tr>
                         <th>CODIGO</th>
-                        <th>EMAILDISTRIBUIDOR</th>
+                        <th>EMAIL DISTRIBUIDOR</th>
                         <th>DESCRIPCION</th>
-                        <th>HORARIODEATENCION</th>
-                        <th>CODIGODISTRIBUIDOR</th>
+                        <th>HORARIO DE ATENCIÓN</th>
+                        <th>CODIGO DISTRIBUIDOR</th>
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="emailDistribuidor" items="${empleados}">
+                    <c:forEach var="emailDistribuidor" items="${emailDistribuidores}">
                     <tr>
-                        <td>${emailDistribuidor.codigoEmailDistribuidor()}</td>
-                        <td>${emailDistribuidor.emailDistribuidor()}</td>
-                        <td>${emailDistribuidor.descripcion()}</td>
-                        <td>${emailDistribuidor.horarioDeAtencion()}</td>
-                        <td>${emailDistribuidor.codigoDistribuidor()}</td>
+                        <td>${emailDistribuidor.getCodigoEmailDistribuidor()}</td>
+                        <td>${emailDistribuidor.getEmailDistribuidor()}</td>
+                        <td>${emailDistribuidor.getDescripcion()}</td>
+                        <td>${emailDistribuidor.getHorarioDeAtencion()}</td>
+                        <td>${emailDistribuidor.getCodigoDistribuidor()}</td>
                         <td>
-                            <a class="btn btn-warning" href="">Editar</a>
-                            <a class="btn btn-danger" href="">Eliminar</a>
+                            <a class="btn btn-warning" href="Controlador?menu=EmailDistribuidor&accion=Editar&codigoEmailDistribuidor=${emailDistribuidor.getCodigoEmailDistribuidor()}">Editar</a>
+                            <a class="btn btn-danger" href="Controlador?menu=EmailDistribuidor&accion=Eliminar&codigoEmailDistribuidor=${emailDistribuidor.getCodigoEmailDistribuidor()}">Eliminar</a>
                         </td>
                         
                     </tr>
-                    </c:foreach>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

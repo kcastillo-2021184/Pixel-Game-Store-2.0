@@ -24,11 +24,12 @@ public class EmailDistribuidorDAO {
     rs = ps.executeQuery();
     while(rs.next()){
     EmailDistribuidor ed = new EmailDistribuidor();
-    ed.setCodigoDistribuidor(rs.getInt(1));
-    ed.setEmailDistribuidor(rs.getString(2));
-    ed.setDescripcion(rs.getString(3));
-    ed.setHorarioDeAtencion(rs.getString(4));
-    ed.setCodigoDistribuidor(rs.getInt(5));     
+    ed.setCodigoEmailDistribuidor(rs.getInt("codigoEmailDistribuidor"));
+    ed.setEmailDistribuidor(rs.getString("emailDistribuidor"));
+    ed.setDescripcion(rs.getString("descripcion"));
+    ed.setHorarioDeAtencion(rs.getString("horarioDeAtencion"));
+    ed.setCodigoDistribuidor(rs.getInt("codigoDistribuidor"));     
+    listaEmailDistribuidor.add(ed);
     }
     }catch(Exception e){
     e.printStackTrace();
@@ -47,7 +48,7 @@ public class EmailDistribuidorDAO {
     ps.setString(2, Email.getDescripcion());
     ps.setString(3, Email.getHorarioDeAtencion());
     ps.setInt(4, Email.getCodigoDistribuidor());
-    
+    ps.executeUpdate();
     }catch(Exception e){
     e.printStackTrace();
     }
@@ -57,17 +58,18 @@ public class EmailDistribuidorDAO {
     
     public EmailDistribuidor listarCodigoEmailDistribuidor (int id){
     EmailDistribuidor Email = new EmailDistribuidor();
-    String sql = "Select * from Empleado where codigoEmpleado ="+id;
+    String sql = "Select * from EmailDistribuidor where codigoEmailDistribuidor ="+id;
     try{
     con = cn.Conexion();
     ps = con.prepareStatement(sql);
     rs = ps.executeQuery();
     
     while(rs.next()){
-    Email.setEmailDistribuidor(rs.getString(2));
-    Email.setDescripcion(rs.getString(3));
-    Email.setHorarioDeAtencion(rs.getString(4));
-    Email.setCodigoDistribuidor(rs.getInt(5));
+    Email.setCodigoEmailDistribuidor(rs.getInt("codigoEmailDistribuidor"));
+    Email.setEmailDistribuidor(rs.getString("emailDistribuidor"));
+    Email.setDescripcion(rs.getString("descripcion"));
+    Email.setHorarioDeAtencion(rs.getString("horarioDeAtencion"));
+    Email.setCodigoDistribuidor(rs.getInt("codigoDistribuidor"));
         
     }
     
@@ -83,6 +85,7 @@ public class EmailDistribuidorDAO {
     
     try{
     con = cn.Conexion();
+    ps = con.prepareStatement(sql);
     ps.setString(1, Email.getEmailDistribuidor());
     ps.setString(2, Email.getDescripcion());
     ps.setString(3, Email.getHorarioDeAtencion());
