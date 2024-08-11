@@ -1,21 +1,19 @@
 package modelo;
 
-import java.util.Date;
-
 
 public class Factura {
     
     private int numeroFactura;
     private String estado;
-    private String totalFactura;
-    private Date fechaFactura;
+    private Double totalFactura;
+    private String fechaFactura;
     private int codigoCliente;
     private int codigoEmpleado;
 
     public Factura() {
     }
 
-    public Factura(int numeroFactura, String estado, String totalFactura, Date fechaFactura, int codigoCliente, int codigoEmpleado) {
+    public Factura(int numeroFactura, String estado, Double totalFactura, String fechaFactura, int codigoCliente, int codigoEmpleado) {
         this.numeroFactura = numeroFactura;
         this.estado = estado;
         this.totalFactura = totalFactura;
@@ -40,19 +38,19 @@ public class Factura {
         this.estado = estado;
     }
 
-    public String getTotalFactura() {
+    public Double getTotalFactura() {
         return totalFactura;
     }
 
-    public void setTotalFactura(String totalFactura) {
+    public void setTotalFactura(Double totalFactura) {
         this.totalFactura = totalFactura;
     }
 
-    public Date getFechaFactura() {
+    public String getFechaFactura() {
         return fechaFactura;
     }
 
-    public void setFechaFactura(Date fechaFactura) {
+    public void setFechaFactura(String fechaFactura) {
         this.fechaFactura = fechaFactura;
     }
 

@@ -16,6 +16,27 @@
                 <li class="nav-item">
                     <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Categoria&accion=Listar" target="myFrame">Categoría</a>
                 </li>
+                <li class="nav-item">
+                      <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Producto&accion=Listar" target="myFrame">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=EmailDistribuidor&accion=Listar" target="myFrame">Email Distribuidor</a>
+                </li>
+                <li class="nav-item">
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=CargoEmpleado&accion=Listar" target="myFrame">Cargo Empleado</a>
+                </li>
+                <li class="nav-item">
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Distribuidores&accion=Listar" target="myFrame">Distribuidores</a>
+                </li>
+                <li class="nav-item">
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=DetalleCompra&accion=Listar" target="myFrame">Detalle Compra</a>
+                </li>
+                <li class="nav-item">
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Clientes&accion=Listar" target="myFrame">Clientes</a>
+                </li>
+                <li>
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Factura&accion=Listar" target="myFrame">Factura</a>                    
+                </li>
               </ul>
             </div>
             <div class="dropdown">

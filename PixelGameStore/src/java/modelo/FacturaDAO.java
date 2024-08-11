@@ -28,8 +28,8 @@ public class FacturaDAO {
                 Factura factura = new Factura();
                 factura.setNumeroFactura(rs.getInt("numeroFactura"));
                 factura.setEstado(rs.getString("estado"));
-                factura.setTotalFactura(rs.getString("totalFactura"));
-                factura.setFechaFactura(rs.getDate("fechaFactura"));
+                factura.setTotalFactura(rs.getDouble("totalFactura"));
+                factura.setFechaFactura(rs.getString("fechaFactura"));
                 factura.setCodigoCliente(rs.getInt("codigoCliente"));
                 factura.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
                 listaFactura.add(factura);
@@ -44,17 +44,16 @@ public class FacturaDAO {
     
     
     public int agregar (Factura factura){
-        String sql = "insert into Factura(numeroFactura, estado, totalFactura, fechaFactura, codigoCliente, codigoEmpleado) values (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into Factura(numeroFactura, estado, fechaFactura, codigoCliente, codigoEmpleado) values (?, ?, ?, ?, ?)";
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, factura.getNumeroFactura());
             ps.setString(2, factura.getEstado());
-            ps.setString(3, factura.getTotalFactura());
-            ps.setDate(4, (Date) factura.getFechaFactura());
-            ps.setInt(5, factura.getCodigoCliente());
-            ps.setInt(6, factura.getCodigoEmpleado());
-            
+            ps.setString(3, factura.getFechaFactura());
+            ps.setInt(4, factura.getCodigoCliente());
+            ps.setInt(5, factura.getCodigoEmpleado());
+            ps.executeUpdate();
             
         }catch (Exception e){
             e.printStackTrace();
@@ -74,8 +73,8 @@ public class FacturaDAO {
             while (rs.next()){
                 factura.setNumeroFactura(rs.getInt("numeroFactura"));
                 factura.setEstado(rs.getString("estado"));
-                factura.setTotalFactura(rs.getString("totalFactura"));
-                factura.setFechaFactura(rs.getDate("fechaFactura"));
+                factura.setTotalFactura(rs.getDouble("totalFactura"));
+                factura.setFechaFactura(rs.getString("fechaFactura"));
                 factura.setCodigoCliente(rs.getInt("codigoCliente"));
                 factura.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
             }
@@ -88,17 +87,16 @@ public class FacturaDAO {
     
     
     public int actualizar (Factura factura){
-        String sql = "update Factura set numeroFactura=?, estado=?, totalFactura=?, fechaFactura=?, codigoCliente=?, codigoEmpleado=?";
+        String sql = "update Factura set  estado=?, totalFactura=?, fechaFactura=?, codigoCliente=?, codigoEmpleado=? where numeroFactura=?";
         try{
             con = cn.Conexion();
             ps= con.prepareStatement(sql);
-            rs= ps.executeQuery();
-            ps.setInt(1, factura.getNumeroFactura());
-            ps.setString(2, factura.getEstado());
-            ps.setString(3, factura.getTotalFactura());
-            ps.setDate(4, (Date) factura.getFechaFactura());
-            ps.setInt(5, factura.getCodigoCliente());
-            ps.setInt(6, factura.getCodigoEmpleado());
+            ps.setString(1, factura.getEstado());
+            ps.setDouble(2, factura.getTotalFactura());
+            ps.setString(3, factura.getFechaFactura());
+            ps.setInt(4, factura.getCodigoCliente());
+            ps.setInt(5, factura.getCodigoEmpleado());
+            ps.setInt(6, factura.getNumeroFactura());
             ps.executeUpdate();
             
             
@@ -111,11 +109,11 @@ public class FacturaDAO {
     
     
     public void eliminar (int id){
-        String sql = "delete from Factura where numeroFacura = " + id;
+        String sql = "delete from Factura where numeroFactura = " + id;
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
+            ps.executeUpdate();
             
         }catch (Exception e){
             e.printStackTrace();

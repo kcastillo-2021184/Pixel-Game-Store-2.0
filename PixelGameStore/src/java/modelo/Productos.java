@@ -1,22 +1,19 @@
 
 package modelo;
 
+import java.util.Base64;
+
 
 public class Productos {
-    private String codigoProducto;
-    private String descripcionProducto;
-    private Double precioUnitario;
-    private Double precioDocena;
-    private Double precioMayor;
-    private Byte[] vistaPrevia;
-    private int existencia;
-    private int codigoCategoria;
-    private int codigoDistribuidor;
+    private String codigoProducto, descripcionProducto, vistaPreviaCadena;
+    private double precioUnitario, precioDocena, precioMayor;
+    private byte[] vistaPrevia;
+    private int existencia, codigoCategoria, codigoDistribuidor;
 
     public Productos() {
     }
 
-    public Productos(String codigoProducto, String descripcionProducto, Double precioUnitario, Double precioDocena, Double precioMayor, Byte[] vistaPrevia, int existencia, int codigoCategoria, int codigoDistribuidor) {
+    public Productos(String codigoProducto, String descripcionProducto, double precioUnitario, double precioDocena, double precioMayor, byte[] vistaPrevia, int existencia, int codigoCategoria, int codigoDistribuidor) {
         this.codigoProducto = codigoProducto;
         this.descripcionProducto = descripcionProducto;
         this.precioUnitario = precioUnitario;
@@ -28,6 +25,20 @@ public class Productos {
         this.codigoDistribuidor = codigoDistribuidor;
     }
 
+    public Productos(String codigoProducto, String descripcionProducto, double precioUnitario, double precioDocena, double precioMayor, String vistaPreviaCadena,int existencia, int codigoCategoria, int codigoDistribuidor) {
+        this.codigoProducto = codigoProducto;
+        this.descripcionProducto = descripcionProducto;
+        this.precioUnitario = precioUnitario;
+        this.precioDocena = precioDocena;
+        this.precioMayor = precioMayor;
+        this.vistaPreviaCadena = vistaPreviaCadena;
+        this.existencia = existencia;
+        this.codigoCategoria = codigoCategoria;
+        this.codigoDistribuidor = codigoDistribuidor;
+    }
+    
+    
+    
     public String getCodigoProducto() {
         return codigoProducto;
     }
@@ -44,35 +55,35 @@ public class Productos {
         this.descripcionProducto = descripcionProducto;
     }
 
-    public Double getPrecioUnitario() {
+    public double getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(Double precioUnitario) {
+    public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
-    public Double getPrecioDocena() {
+    public double getPrecioDocena() {
         return precioDocena;
     }
 
-    public void setPrecioDocena(Double precioDocena) {
+    public void setPrecioDocena(double precioDocena) {
         this.precioDocena = precioDocena;
     }
 
-    public Double getPrecioMayor() {
+    public double getPrecioMayor() {
         return precioMayor;
     }
 
-    public void setPrecioMayor(Double precioMayor) {
+    public void setPrecioMayor(double precioMayor) {
         this.precioMayor = precioMayor;
     }
 
-    public Byte[] getVistaPrevia() {
+    public byte[] getVistaPrevia() {
         return vistaPrevia;
     }
 
-    public void setVistaPrevia(Byte[] vistaPrevia) {
+    public void setVistaPrevia(byte[] vistaPrevia) {
         this.vistaPrevia = vistaPrevia;
     }
 
@@ -100,5 +111,14 @@ public class Productos {
         this.codigoDistribuidor = codigoDistribuidor;
     }
     
+    public String getVistaPreviaBase() {
+        if (vistaPrevia != null) {
+            return Base64.getEncoder().encodeToString(vistaPrevia);
+        }
+        return null;
+    }
     
+    public void setVistaPreviaCadena(String vistaPreviaCadena){
+        this.vistaPreviaCadena = vistaPreviaCadena;
+    }
 }
