@@ -57,7 +57,7 @@ public class CargoEmpleadoDAO {
     }
     
     public int agregar(CargoEmpleado cea){
-        String sql = "insert into CargoEmpleado(codigoCargoEmpleado, nombreCargoEmpleado, descripcion, turno) values (?,?,?,?)";
+        String sql = "insert into CargoEmpleado(nombreCargo, descripcionCargo, turno) values (?,?,?)";
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -90,13 +90,14 @@ public class CargoEmpleadoDAO {
     }
     
     public int actualizar(CargoEmpleado cea){
-        String sql = "Update CargoEmpleado set nombreCargo = ?, descripcion = ?, turno = ?";
+        String sql = "Update CargoEmpleado set nombreCargo = ?, descripcionCargo = ?, turno = ? where codigoCargoEmpleado = ?";
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             ps.setString(1, cea.getNombreCargo());
             ps.setString(2, cea.getDescripcion());
             ps.setString(3, cea.getTurno());
+            ps.setInt(4, cea.getCodigoCargoEmpleado());
             ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
@@ -105,7 +106,7 @@ public class CargoEmpleadoDAO {
     }
     
     public void eliminar(int id){
-        String sql = "delete from empleado where codigoEmpleado="+ id;
+        String sql = "delete from cargoEmpleado where codigoCargoEmpleado="+ id;
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);

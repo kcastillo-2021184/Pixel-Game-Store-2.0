@@ -16,20 +16,20 @@ public class ComprasDAO {
     ResultSet rs;
     int resp;
     
-    public List <Compras> listar(){
-        String sql = "Select * form compras";
+    public List <Compras> Listar(){
+        String sql = "select * from Compras";
         List<Compras> listaCompras = new ArrayList<>();
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                Compras compra = new Compras();
-                compra.setNumeroDocumento(rs.getInt("numeroDocumento"));
-                compra.setFechaDocumento(rs.getDate("fechaDocumento"));
-                compra.setDescripcion(rs.getString("descripcion"));
-                compra.setTotalDocumento(rs.getDouble("totalDocumento"));
-                listaCompras.add(compra);
+                Compras com = new Compras();
+                com.setNumeroDocumento(rs.getInt(1));
+                com.setFechaDocumento(rs.getString(2));
+                com.setDescripcion(rs.getString(3));
+                com.setTotalDocumento(rs.getDouble(4));
+                listaCompras.add(com);
             }
             
         }catch(Exception e){
@@ -39,13 +39,14 @@ public class ComprasDAO {
     }
         
     public int agregar(Compras compra){
-        String sql = "Insert into compras(numeroDocumento, fechaDocumento, descripcion, totalDocumento) values(?,?,?,?)";
+        String sql = "Insert into Compras(numeroDocumento, fechaDocumento, descripcion, totalDocumento) values (?,?,?,?)";
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setDate(1, (Date) compra.getFechaDocumento());
-            ps.setString(2, compra.getDescripcion());
-            ps.setDouble(3, compra.getTotalDocumento());
+            ps.setInt(1, compra.getNumeroDocumento());
+            ps.setString(2, compra.getFechaDocumento());
+            ps.setString(3, compra.getDescripcion());
+            ps.setDouble(4, compra.getTotalDocumento());
             ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
@@ -53,38 +54,34 @@ public class ComprasDAO {
         return resp;
     }
      
-    public Compras listarNumeroDocumento(int id){
-        Compras compra = new Compras();
-        String sql = "select * from compras where numeroDocumento = " + id;
+    public Compras ListarNumeroDocumento(int id){
+        Compras com = new Compras();
+        String sql = "Select * from Compras where numeroDocumento ="+ id;
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                compra.setNumeroDocumento(rs.getInt("numeroDocumento"));
-                compra.setFechaDocumento(rs.getDate("fechaDocumento"));
-                compra.setDescripcion(rs.getString("descripcion"));
-                compra.setTotalDocumento(rs.getDouble("totalDocumento"));
+                com.setNumeroDocumento(rs.getInt(1));
+                com.setFechaDocumento(rs.getString(2));
+                com.setDescripcion(rs.getString(3));
+                com.setTotalDocumento(rs.getDouble(4));
             }
         }catch(Exception e){
             e.printStackTrace();
         }
-        return compra;
+        return com;
     }
     
-    public int actualizar(Compras compra){
-        String sql = "update compras "
-                + "set numeroDocumento = ?, "
-                + "set fechaDocumento = ?, "
-                + "set descripcion = ?, "
-                + "set totalDocumento = ?, ";
+    public int actualizar(Compras com){
+        String sql = "Update Compras set fechaDocumento = ?, descripcion = ?, totalDocumento = ? where numeroDocumento = ?";
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setDate(1, (Date) compra.getFechaDocumento());
-            ps.setString(2, compra.getDescripcion());
-            ps.setDouble(3, compra.getTotalDocumento());
-            ps.setInt(4, compra.getNumeroDocumento());
+            ps.setString(1, com.getFechaDocumento());
+            ps.setString(2, com.getDescripcion());
+            ps.setDouble(3, com.getTotalDocumento());
+            ps.setInt(4, com.getNumeroDocumento());
             ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
@@ -93,7 +90,7 @@ public class ComprasDAO {
     }
     
     public void eliminar(int id){
-        String sql = "delete from compras where numeroDocumento = " +id;
+        String sql = "delete from Compras where numeroDocumento = " +id;
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);

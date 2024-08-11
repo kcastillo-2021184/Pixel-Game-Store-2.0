@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group">
                         <label><strong>Descripción Cargo:</strong></label>
-                        <input type="text" value="${cargoEmpleado.descripcion}" name="txtDescripcion" class="form-control">
+                        <input type="text" value="${cargoEmpleado.descripcion}" name="txtDescripcionCargo" class="form-control">
                     </div>
                     <div class="form-group">
                         <label><strong>Turno:</strong></label>
