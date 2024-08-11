@@ -42,4 +42,179 @@ create table Clientes (
     primary key (codigoCliente)
 );
 
+create table Compras (
+    numeroDocumento int not null,
+    fechaDocumento date not null,
+    descripcion varchar(60) not null,
+    totalDocumento decimal(10,2) default 0,
+    primary key (numeroDocumento)
+);
 
+create table CargoEmpleado (
+    codigoCargoEmpleado int not null auto_increment,
+    nombreCargo varchar(45) not null,
+    descripcionCargo varchar(45) not null,
+    turno varchar(15) not null,
+    primary key (codigoCargoEmpleado)
+);
+
+create table TelefonoDistribuidor (
+    codigoTelefonoDistribuidor int not null auto_increment,
+    numeroPrincipal varchar(8) not null,
+    numeroSecundario varchar(8),
+    observaciones varchar(45),
+    codigoDistribuidor int not null,
+    primary key (codigoTelefonoDistribuidor),
+    constraint FK_TelefonoDistribuidor_Distribuidores 
+        foreign key (codigoDistribuidor) references Distribuidores(codigoProveedor)
+);
+
+create table Productos (
+    codigoProducto varchar(15) not null,
+    descripcionProducto varchar(45) not null,
+    precioUnitario decimal(10,2) default 0.00,
+    precioDocena decimal(10,2) default 0.00,
+    precioMayor decimal(10,2) default 0.00,
+    vistaPrevia longblob,
+    existencia int default 0,
+    codigoCategoria int not null,
+    codigoDistribuidor int not null,
+    primary key (codigoProducto),
+    constraint FK_Productos_Categoria
+        foreign key (codigoCategoria)
+            references Categoria(codigoCategoria),
+    constraint FK_Productos_Distribuidores
+        foreign key (codigoDistribuidor)
+            references Distribuidores(codigoProveedor)    
+);
+
+create table DetalleCompra (
+    codigoDetalleCompra int not null auto_increment,
+    costoUnitario decimal(10,2) not null,
+    cantidad int not null,
+    codigoProducto varchar(15) not null,
+    numeroDocumento int not null,
+    primary key (codigoDetalleCompra),
+    constraint FK_DetalleCompra_Productos
+        foreign key (codigoProducto)
+            references Productos(codigoProducto),
+    constraint FK_DetalleCompra_Compras
+        foreign key (numeroDocumento)
+            references Compras(numeroDocumento)
+);
+
+create table EmailDistribuidor (
+    codigoEmailDistribuidor int not null auto_increment,
+    emailDistribuidor varchar(50) not null,
+    descripcion varchar(100) not null,
+    horarioDeAtencion varchar(30) not null,
+    codigoDistribuidor int not null,
+    primary key (codigoEmailDistribuidor),
+    constraint FK_EmailDistribuidor_Distribuidores
+        foreign key (codigoDistribuidor)
+            references Distribuidores(codigoProveedor)
+);
+
+create table Empleados (
+    codigoEmpleado int not null,
+    nombresEmpleado varchar(50) not null,
+    apellidosEmpleado varchar(50) not null,
+    sueldo decimal(10,2) not null,
+    direccionEmpleado varchar(150) not null,
+    codigoCargoEmpleado int not null,
+    primary key (codigoEmpleado),
+    constraint FK_Empleados_CargoEmpleado
+        foreign key (codigoCargoEmpleado)
+            references CargoEmpleado(codigoCargoEmpleado)
+);
+
+create table Factura (
+    numeroFactura int not null,
+    estado varchar(50) not null,
+    totalFactura decimal(10,2) default 0.00,
+    fechaFactura date not null,
+    codigoCliente int not null,
+    codigoEmpleado int not null,
+    primary key (numeroFactura),
+    constraint FK_Factura_Clientes
+        foreign key (codigoCliente)
+            references Clientes(codigoCliente),
+    constraint FK_Factura_Empleados
+        foreign key (codigoEmpleado)
+            references Empleados(codigoEmpleado)
+);
+
+create table DetalleFactura (
+    codigoDetalleFactura int not null auto_increment,
+    precioUnitario decimal(10,2) default 0.00,
+    cantidad int not null,
+    numeroFactura int not null,
+    codigoProducto varchar(15) not null,
+    primary key (codigoDetalleFactura),
+    constraint FK_DetalleFactura_Factura foreign key (numeroFactura)
+        references Factura (numeroFactura),
+    constraint FK_DetalleFactura_Productos foreign key (codigoProducto)
+        references Productos (codigoProducto)
+);
+
+create table TipoUsuario (
+    codigoTipoUsuario int not null auto_increment,
+    tipoUsuario varchar(20) not null,
+    primary key (codigoTipoUsuario)
+);
+
+create table Usuario (
+    codigoUsuario int not null auto_increment,
+    nombreUsuario varchar(100) not null,
+    apellidoUsuario varchar(100) not null,
+    usuarioLogin varchar(50) not null,
+    contrasena varchar(50) not null,
+    codigoTipoUsuario int not null,
+    primary key (codigoUsuario),
+    constraint FK_Usuario_TipoUsuario foreign key (codigoTipoUsuario)
+        references TipoUsuario(codigoTipoUsuario)
+);
+
+INSERT INTO Clientes (NITCliente, nombresCliente, apellidosCliente, direccionCliente, telefonoCliente, correoCliente) VALUES ('1234567890', 'Juan', 'Pérez', '123 Calle Falsa, Ciudad', '5551234', 'juan.perez@example.com');
+
+
+insert into TipoUsuario(tipoUsuario) values('Administrador');
+insert into TipoUsuario(tipoUsuario) values('Empleado');
+insert into TipoUsuario(tipoUsuario) values('Cliente');
+
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Admin', 'admin', 'admin2024', 'admin123' , '1');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Pedro', 'Armas', 'parmas', 'admin123', '1');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('José', 'Aceituno', 'jaceituno-2020037', 2020037, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Julio', 'Alvarado', 'jalvarado-2021353', 2021353, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Jose', 'Arrecis', 'jarrecis-2020444', 2020444, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Juan', 'Barrera', 'jbarrera-2020316', 2020316, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Christopher', 'Barrera', 'cbarrera-2020306', 2020306, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Miguel', 'Bautista', 'mbautista-2020375', 2020375, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Alexander', 'Borja', 'aborja-2020413', 2020413, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Diego', 'Caal', 'dcaal-2020531', 2020531, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Jorge', 'Castellanos', 'jcastellanos-2020387', 2020387, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Kevin', 'Castillo', 'kcastillo-2021184', 2021184, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Hettson', 'Ceballos', 'hceballos-2020415', 2020415, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Andrés', 'Coloma', 'acoloma-2023009', 2020009, '2');
+    
+-- Inserts para los distribuidores
+insert into Distribuidores(nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Aqui todos somos gamers', 'Avenida Las Américas 7-04 Zona 3', '01003', 'https://www.aquitodossomosgamers.com/');
+Insert into Distribuidores (nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Click GT', 'Centro comercial Peri Roosevelt zona 7 local 40', '01007', 'https://www.click.gt/');
+Insert into Distribuidores (nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Rech', 'Local S6 en el sótano, Plaza San Cristobal', '01057', 'https://www.rech.com.gt/');
+Insert into Distribuidores (nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Kemik', '7A Avenida 2-21, Cdad. de Guatemala', '01004', 'https://www.kemik.gt/tienda-en-linea/gaming');
+Insert into Distribuidores (nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Max', 'Calzada Roosevelt 25-50 Zona 7, Centro Comercial Peri Roosevelt, local 1-25.', '01007', 'https://www.max.com.gt/');
+ 

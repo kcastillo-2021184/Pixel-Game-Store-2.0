@@ -76,6 +76,5 @@ public class Clientes {
 
     public void setCorreoCliente(String correoCliente) {
         this.correoCliente = correoCliente;
-    }
-    
+    }  
 }
