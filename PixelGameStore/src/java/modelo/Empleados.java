@@ -6,19 +6,17 @@ public class Empleados {
     private String apellidosEmpleado;
     private Double sueldo;
     private String direccionEmpleado;
-    private String turno;
     private int codigoCargoEmpleado;
 
     public Empleados() {
     }
 
-    public Empleados(int codigoEmpleado, String nombresEmpleado, String apellidosEmpleado, Double sueldo, String direccionEmpleado, String turno, int codigoCargoEmpleado) {
+    public Empleados(int codigoEmpleado, String nombresEmpleado, String apellidosEmpleado, Double sueldo, String direccionEmpleado, int codigoCargoEmpleado) {
         this.codigoEmpleado = codigoEmpleado;
         this.nombresEmpleado = nombresEmpleado;
         this.apellidosEmpleado = apellidosEmpleado;
         this.sueldo = sueldo;
         this.direccionEmpleado = direccionEmpleado;
-        this.turno = turno;
         this.codigoCargoEmpleado = codigoCargoEmpleado;
     }
 
@@ -60,14 +58,6 @@ public class Empleados {
 
     public void setDireccionEmpleado(String direccionEmpleado) {
         this.direccionEmpleado = direccionEmpleado;
-    }
-
-    public String getTurno() {
-        return turno;
-    }
-
-    public void setTurno(String turno) {
-        this.turno = turno;
     }
 
     public int getCodigoCargoEmpleado() {

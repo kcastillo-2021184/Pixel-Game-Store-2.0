@@ -127,3 +127,94 @@ create table Empleados (
         foreign key (codigoCargoEmpleado)
             references CargoEmpleado(codigoCargoEmpleado)
 );
+
+create table Factura (
+    numeroFactura int not null,
+    estado varchar(50) not null,
+    totalFactura decimal(10,2) default 0.00,
+    fechaFactura date not null,
+    codigoCliente int not null,
+    codigoEmpleado int not null,
+    primary key (numeroFactura),
+    constraint FK_Factura_Clientes
+        foreign key (codigoCliente)
+            references Clientes(codigoCliente),
+    constraint FK_Factura_Empleados
+        foreign key (codigoEmpleado)
+            references Empleados(codigoEmpleado)
+);
+
+create table DetalleFactura (
+    codigoDetalleFactura int not null auto_increment,
+    precioUnitario decimal(10,2) default 0.00,
+    cantidad int not null,
+    numeroFactura int not null,
+    codigoProducto varchar(15) not null,
+    primary key (codigoDetalleFactura),
+    constraint FK_DetalleFactura_Factura foreign key (numeroFactura)
+        references Factura (numeroFactura),
+    constraint FK_DetalleFactura_Productos foreign key (codigoProducto)
+        references Productos (codigoProducto)
+);
+
+create table TipoUsuario (
+    codigoTipoUsuario int not null auto_increment,
+    tipoUsuario varchar(20) not null,
+    primary key (codigoTipoUsuario)
+);
+
+create table Usuario (
+    codigoUsuario int not null auto_increment,
+    nombreUsuario varchar(100) not null,
+    apellidoUsuario varchar(100) not null,
+    usuarioLogin varchar(50) not null,
+    contrasena varchar(50) not null,
+    codigoTipoUsuario int not null,
+    primary key (codigoUsuario),
+    constraint FK_Usuario_TipoUsuario foreign key (codigoTipoUsuario)
+        references TipoUsuario(codigoTipoUsuario)
+);
+
+INSERT INTO Clientes (NITCliente, nombresCliente, apellidosCliente, direccionCliente, telefonoCliente, correoCliente) VALUES ('1234567890', 'Juan', 'Pérez', '123 Calle Falsa, Ciudad', '5551234', 'juan.perez@example.com');
+
+
+insert into TipoUsuario(tipoUsuario) values('Administrador');
+insert into TipoUsuario(tipoUsuario) values('Empleado');
+insert into TipoUsuario(tipoUsuario) values('Cliente');
+
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Admin', 'admin', 'admin2024', 'admin123' , '1');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Pedro', 'Armas', 'parmas', 'admin123', '1');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('José', 'Aceituno', 'jaceituno-2020037', 2020037, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Julio', 'Alvarado', 'jalvarado-2021353', 2021353, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Jose', 'Arrecis', 'jarrecis-2020444', 2020444, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Juan', 'Barrera', 'jbarrera-2020316', 2020316, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Christopher', 'Barrera', 'cbarrera-2020306', 2020306, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Miguel', 'Bautista', 'mbautista-2020375', 2020375, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Alexander', 'Borja', 'aborja-2020413', 2020413, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Diego', 'Caal', 'dcaal-2020531', 2020531, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Jorge', 'Castellanos', 'jcastellanos-2020387', 2020387, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Kevin', 'Castillo', 'kcastillo-2021184', 2021184, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Hettson', 'Ceballos', 'hceballos-2020415', 2020415, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Andrés', 'Coloma', 'acoloma-2023009', 2020009, '2');
+    
+-- Inserts para los distribuidores
+insert into Distribuidores(nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Aqui todos somos gamers', 'Avenida Las Américas 7-04 Zona 3', '01003', 'https://www.aquitodossomosgamers.com/');
+Insert into Distribuidores (nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Click GT', 'Centro comercial Peri Roosevelt zona 7 local 40', '01007', 'https://www.click.gt/');
+Insert into Distribuidores (nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Rech', 'Local S6 en el sótano, Plaza San Cristobal', '01057', 'https://www.rech.com.gt/');
+Insert into Distribuidores (nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Kemik', '7A Avenida 2-21, Cdad. de Guatemala', '01004', 'https://www.kemik.gt/tienda-en-linea/gaming');
+Insert into Distribuidores (nombreDistribuidor, direccionDistribuidor, codigoPostal, paginaWeb) values ('Max', 'Calzada Roosevelt 25-50 Zona 7, Centro Comercial Peri Roosevelt, local 1-25.', '01007', 'https://www.max.com.gt/');
+ 
