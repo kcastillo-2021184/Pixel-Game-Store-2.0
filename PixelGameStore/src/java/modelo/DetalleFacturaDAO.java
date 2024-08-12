@@ -8,78 +8,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetalleFacturaDAO {
-    
-    Conexion cn = new Conexion();
-    Connection con;
-    PreparedStatement ps;
-    ResultSet rs;
-    int resp;
-    
-    public DetalleFactura validar(double precioUnitario, int cantidad){
-        DetalleFactura detalleFactura = new DetalleFactura();
-        String sql = "Select * from detalleFacutra where precioUnitario = ? and cantidad = ?";
-        try{
+    Conexion cn = new Conexion(); 
+    Connection con; 
+    PreparedStatement ps; 
+    ResultSet rs; 
+
+    public DetalleFactura buscar(int codigoDetalleFactura) {
+        DetalleFactura detalle = new DetalleFactura();
+        String sql = "SELECT * FROM DetalleFactura WHERE codigoDetalleFactura = ?";
+        try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setDouble(1, precioUnitario);
-            ps.setInt(2, cantidad);
+            ps.setInt(1, codigoDetalleFactura);
             rs = ps.executeQuery();
-            rs = ps.executeQuery();
-            while(rs.next()){
-                detalleFactura.setCodigoDetalleFactura(rs.getInt("codigoDetalleFactura"));
-                detalleFactura.setPrecioUnitario(rs.getDouble("precioUnitario"));
-                detalleFactura.setCantidad(rs.getInt("cantidad"));
-                detalleFactura.setNumeroFactura(rs.getInt("numeroFactura"));
-                detalleFactura.setCodigoProducto(rs.getString("codigoProducto"));
+            if (rs.next()) {
+                detalle.setCodigoDetalleFactura(rs.getInt("codigoDetalleFactura"));
+                detalle.setPrecioUnitario(rs.getDouble("precioUnitario"));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setNumeroFactura(rs.getInt("numeroFactura"));
+                detalle.setCodigoProducto(rs.getString("codigoProducto"));
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return detalleFactura;
+        return detalle;
     }
-    
-    //Método para listar todos los detalles de factura
-    public List <DetalleFactura> listar(){
-        String sql = "Select * from detalleFactura";
-        List<DetalleFactura> listaDetalleFactura = new ArrayList<>();
-        try{
+
+    public List<DetalleFactura> listarDetalles() {
+        String sql = "SELECT * FROM DetalleFactura";
+        List<DetalleFactura> listaDetalles = new ArrayList<>();
+        try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            while(rs.next()){
-                DetalleFactura detalleFactura = new DetalleFactura();
-                detalleFactura.setCodigoDetalleFactura(rs.getInt("codigoDetalleFactura"));
-                detalleFactura.setPrecioUnitario(rs.getDouble("precioUnitario"));
-                detalleFactura.setCantidad(rs.getInt("cantidad"));
-                detalleFactura.setNumeroFactura(rs.getInt("numeroFactura"));
-                listaDetalleFactura.add(detalleFactura);
+            while (rs.next()) {
+                DetalleFactura detalle = new DetalleFactura();
+                detalle.setCodigoDetalleFactura(rs.getInt("codigoDetalleFactura"));
+                detalle.setPrecioUnitario(rs.getDouble("precioUnitario"));
+                detalle.setCantidad(rs.getInt("cantidad"));
+                detalle.setNumeroFactura(rs.getInt("numeroFactura"));
+                detalle.setCodigoProducto(rs.getString("codigoProducto"));
+                listaDetalles.add(detalle);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return listaDetalleFactura;
+        return listaDetalles;
     }
-    
-    //Método para agregar todos los detalles fatura
-    public int agregar(DetalleFactura detalle){
-        String sql = "Inser into detalleFactura(precioUnitario, cantidad, numeroFactura, codigoProducto) values (?,?,?,?)";
-        try{
+
+    public int agregar(DetalleFactura detalle) {
+        String sql = "INSERT INTO DetalleFactura (cantidad, numeroFactura, codigoProducto) VALUES (?, ?, ?)";
+        int resp = 0;
+        try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setDouble(1, detalle.getPrecioUnitario());
-            ps.setInt(2, detalle.getCantidad());
-            ps.setInt(3, detalle.getNumeroFactura());
-            ps.setString(4, detalle.getCodigoProducto());
-        }catch(Exception e){
+            ps.setInt(1, detalle.getCantidad());
+            ps.setInt(2, detalle.getNumeroFactura());
+            ps.setString(3, detalle.getCodigoProducto());
+            resp = ps.executeUpdate();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return resp;
     }
-    
-    //Método para actualizar un detalle de factura
-    public int actualizar(DetalleFactura detalle){
-        String sql = "Update detalleFactura set precioUnitario = ?, cantidad = ?, numeroFactura = ?, codigoProducto = ? where codigoDetalleFactura = ?";
-        try{
+
+    public int actualizar(DetalleFactura detalle) {
+        String sql = "UPDATE DetalleFactura SET precioUnitario = ?, cantidad = ?, numeroFactura = ?, codigoProducto = ? WHERE codigoDetalleFactura = ?";
+        int resp = 0;
+        try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             ps.setDouble(1, detalle.getPrecioUnitario());
@@ -87,21 +83,24 @@ public class DetalleFacturaDAO {
             ps.setInt(3, detalle.getNumeroFactura());
             ps.setString(4, detalle.getCodigoProducto());
             ps.setInt(5, detalle.getCodigoDetalleFactura());
-        }catch(Exception e){
+            resp = ps.executeUpdate();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return resp;
     }
-    
-    //Método para eliminar detalle de factura
-    public void eliminar(int id){
-        String sql = "Delete from detalleFactura where codigoDetalleFactura = "+ id;
-        try{
+
+    public int eliminar(int codigoDetalleFactura) {
+        String sql = "DELETE FROM DetalleFactura WHERE codigoDetalleFactura = ?";
+        int resp = 0;
+        try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.executeUpdate();
-        }catch(Exception e){
+            ps.setInt(1, codigoDetalleFactura);
+            resp = ps.executeUpdate();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return resp;
     }
 }

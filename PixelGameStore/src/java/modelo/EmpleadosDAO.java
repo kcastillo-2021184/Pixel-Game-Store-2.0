@@ -15,11 +15,11 @@ public class EmpleadosDAO {
     int resp;
     
     public List listar(){
-        String sql = "Select * Empleados";
+        String sql = "Select * from Empleados";
         List<Empleados> listaEmpleados = new ArrayList();
         try{
             con = cn.Conexion();
-            ps = con.prepareCall(sql);
+            ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             
             while(rs.next()){
@@ -29,8 +29,7 @@ public class EmpleadosDAO {
                 em.setApellidosEmpleado(rs.getString(3));
                 em.setSueldo(rs.getDouble(4));
                 em.setDireccionEmpleado(rs.getString(5));
-                em.setTurno(rs.getString(6));
-                em.setCodigoCargoEmpleado(rs.getInt(7));
+                em.setCodigoCargoEmpleado(rs.getInt(6));
                 listaEmpleados.add(em);
             }
         }catch(Exception e){
@@ -41,10 +40,10 @@ public class EmpleadosDAO {
     }
     
     public int agregar(Empleados emp){
-        String sql = "insert into Empleados(codigoEmpleado, nombresEmpleado, apellidosEmpleado, sueldo, direccionEmpleado, codigoCargoEmpleado values (?,?,?,?,?,?)";
+        String sql = "insert into Empleados(codigoEmpleado, nombresEmpleado, apellidosEmpleado, sueldo, direccionEmpleado, codigoCargoEmpleado) values (?,?,?,?,?,?)";
         try{
             con = cn.Conexion();
-            ps = con.prepareCall(sql);
+            ps = con.prepareStatement(sql);
             ps.setInt(1, emp.getCodigoEmpleado());
             ps.setString(2, emp.getNombresEmpleado());
             ps.setString(3, emp.getApellidosEmpleado());
@@ -64,14 +63,14 @@ public class EmpleadosDAO {
         String sql = "Select * from Empleados where codigoEmpleado =" + id;
         try{
             con = cn.Conexion();
-            ps = con.prepareCall(sql);
+            ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
                 emp.setNombresEmpleado(rs.getString(2));
                 emp.setApellidosEmpleado(rs.getString(3));
                 emp.setSueldo(rs.getDouble(4));
                 emp.setDireccionEmpleado(rs.getString(5));
-                emp.setCodigoCargoEmpleado(rs.getInt(7));
+                emp.setCodigoCargoEmpleado(rs.getInt(6));
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -85,7 +84,7 @@ public class EmpleadosDAO {
                 + "sueldo = ?, direccionEmpleado = ?, codigoCargoEmpleado = ? where codigoEmpleado = ?";
         try{
             con = cn.Conexion();
-            ps = con.prepareCall(sql);
+            ps = con.prepareStatement(sql);
             ps.setString(1, emp.getNombresEmpleado());
             ps.setString(2, emp.getApellidosEmpleado());
             ps.setDouble(3, emp.getSueldo());
@@ -101,10 +100,10 @@ public class EmpleadosDAO {
     }
     
     public void eliminar(int id){
-        String sql = "delete from Empleados where codigoEmpleado = ?";
+        String sql = "delete from Empleados where codigoEmpleado = " + id;
         try{
             con = cn.Conexion();
-            ps = con.prepareCall(sql);
+            ps = con.prepareStatement(sql);
             ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();

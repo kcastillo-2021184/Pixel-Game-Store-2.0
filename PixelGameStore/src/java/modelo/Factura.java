@@ -1,27 +1,24 @@
+
 package modelo;
 
 import java.util.Date;
 
-
 public class Factura {
-    
-    private int numeroFactura;
+    private int numeroFactura, codigoCliente, codigoEmpleado;
     private String estado;
-    private String totalFactura;
     private Date fechaFactura;
-    private int codigoCliente;
-    private int codigoEmpleado;
+    private double totalFactura;
 
     public Factura() {
     }
 
-    public Factura(int numeroFactura, String estado, String totalFactura, Date fechaFactura, int codigoCliente, int codigoEmpleado) {
+    public Factura(int numeroFactura, int codigoCliente, int codigoEmpleado, String estado, Date fechaFactura, double totalFactura) {
         this.numeroFactura = numeroFactura;
-        this.estado = estado;
-        this.totalFactura = totalFactura;
-        this.fechaFactura = fechaFactura;
         this.codigoCliente = codigoCliente;
         this.codigoEmpleado = codigoEmpleado;
+        this.estado = estado;
+        this.fechaFactura = fechaFactura;
+        this.totalFactura = totalFactura;
     }
 
     public int getNumeroFactura() {
@@ -30,30 +27,6 @@ public class Factura {
 
     public void setNumeroFactura(int numeroFactura) {
         this.numeroFactura = numeroFactura;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getTotalFactura() {
-        return totalFactura;
-    }
-
-    public void setTotalFactura(String totalFactura) {
-        this.totalFactura = totalFactura;
-    }
-
-    public Date getFechaFactura() {
-        return fechaFactura;
-    }
-
-    public void setFechaFactura(Date fechaFactura) {
-        this.fechaFactura = fechaFactura;
     }
 
     public int getCodigoCliente() {
@@ -71,10 +44,33 @@ public class Factura {
     public void setCodigoEmpleado(int codigoEmpleado) {
         this.codigoEmpleado = codigoEmpleado;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Date getFechaFactura() {
+        return fechaFactura;
+    }
+
+    public void setFechaFactura(Date fechaFactura) {
+        this.fechaFactura = fechaFactura;
+    }
+
+    public double getTotalFactura() {
+        return totalFactura;
+    }
+
+    public void setTotalFactura(double totalFactura) {
+        this.totalFactura = totalFactura;
+    }
+
     
-    
-    
-    
+
     
     
 }
