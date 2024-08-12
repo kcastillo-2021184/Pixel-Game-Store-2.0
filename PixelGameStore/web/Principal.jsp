@@ -5,13 +5,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Menu Principal</title>  
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css " integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link rel="stylesheet" href="PrincipalCSS.css">
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-info">
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="">Home</a>
+                <li class="nav-item">
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Home"target="myFrame">Home</a>
                 </li>
                 <li class="nav-item">
                     <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Categoria&accion=Listar" target="myFrame">Categoría</a>
@@ -37,11 +38,23 @@
                 <li>
                     <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Factura&accion=Listar" target="myFrame">Factura</a>                    
                 </li>
+                <li>
+                    <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Compras&accion=Listar" target="myFrame">Compras</a>                    
+                </li>
               </ul>
             </div>
             <div class="dropdown">
-                
+                <button style="border: none" class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  ${usuario.getNombreUsuario()}
+                </button>
                 <div class="dropdown-menu text-center" aria-labelledby="dropdownMenu2">
+                  <div class="dropdown-menu text-center" aria-labelledby="dropdownMenu2">
+                    <a class="dropdown-item" href="">
+                        <img src="" alt="60" widht="60"
+                    </a>
+                  <a class="dropdown-item" >${usuario.getNombreUsuario()}</a>
+                   <a class="dropdown-item" >${usuario.getApellidoUsuario()}</a>
+                   <a class="dropdown-item" >${usuario.getUsuarioLogin()}</a>
                   <div class="dropdown-divider"></div>
                   <form action="Validar" method="POST">
                       <button name="accion" name="Salir" class="dropdown-item">Salir</button>
@@ -49,8 +62,12 @@
                 </div>
               </div>         
           </nav>
+                  
+         
+            
         
-                  <div class="m-4" style="height: 850px">
+        
+                  <div class="m-4" style="height: 950px">
                       <iframe name="myFrame" style="height:100%; width:100%;border:none"></iframe>
                   </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

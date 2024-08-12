@@ -18,6 +18,8 @@ import modelo.Categoria;
 import modelo.CategoriaDAO;
 import modelo.Clientes;
 import modelo.ClientesDAO;
+import modelo.Compras;
+import modelo.ComprasDAO;
 import modelo.DetalleCompra;
 import modelo.DetalleCompraDAO;
 import modelo.Distribuidores;
@@ -57,7 +59,9 @@ public class Controlador extends HttpServlet {
     Clientes clientes = new Clientes();
     ClientesDAO clientesDao = new ClientesDAO();
     int codDetalleCompra;
-    
+    Compras compras = new Compras();
+    ComprasDAO comprasDao = new ComprasDAO();
+    int numDocumento;
     Usuario empleado = new Usuario();
     UsuarioDAO empleadoDao = new UsuarioDAO();
     Categoria  categoria = new Categoria();
@@ -75,9 +79,14 @@ public class Controlador extends HttpServlet {
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
 
-        if (menu.equals("Principal")) {
-            request.getRequestDispatcher("Principal.jsp").forward(request, response);   
-        }else if(menu.equals("Categoria")){
+        if (menu.equals("PrincipalClientes")) {
+            request.getRequestDispatcher("PrincipalClientes.jsp").forward(request, response);   
+        }else if(menu.equals("Principal")){
+            request.getRequestDispatcher("Principal.jsp").forward(request, response);
+        }else if(menu.equals("Home")){
+            request.getRequestDispatcher("Home.jsp").forward(request, response);
+        }
+        else if(menu.equals("Categoria")){
             switch(accion){
                 case "Listar":
                     List listaCategoria = categoriaDao.listar();
@@ -120,7 +129,48 @@ public class Controlador extends HttpServlet {
             
                         
                         
-        }else if (menu.equals("Producto")) {
+        }else if(menu.equals("Compras")){
+            switch(accion){
+                case "Listar":
+                    List listaCompras = comprasDao.Listar();
+                    request.setAttribute("compras", listaCompras);
+                    break;
+                case "Agregar":
+                    int numeroDocumento = Integer.parseInt(request.getParameter("txtNumeroDocumento"));
+                    String fechaDocumento = request.getParameter("txtFechaDocumento");
+                    String descripcion = request.getParameter("txtDescripcion");
+                    compras.setNumeroDocumento(numeroDocumento);
+                    compras.setFechaDocumento(fechaDocumento);
+                    compras.setDescripcion(descripcion);
+                    comprasDao.agregar(compras);
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                    break;
+                case "Editar":
+                    numDocumento = Integer.parseInt(request.getParameter("numeroDocumento")); // Asegúrate de que este valor esté disponible
+                    Compras com = comprasDao.ListarNumeroDocumento(numDocumento);
+                    request.setAttribute("Compras", com);
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                    break;
+                case "Actualizar":
+                    String FechaDocumento = request.getParameter("txtFechaDocumento");
+                    String Descripcion = request.getParameter("txtDescripcion");
+                    double Totaldocumento = Double.parseDouble(request.getParameter("txtTotalDocumento")); // Convierte correctamente a double
+                    compras.setNumeroDocumento(numDocumento); 
+                    compras.setFechaDocumento(FechaDocumento);
+                    compras.setDescripcion(Descripcion);
+                    compras.setTotalDocumento(Totaldocumento); 
+                    comprasDao.actualizar(compras);
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                    break;
+                case "Eliminar":
+                    numDocumento = Integer.parseInt(request.getParameter("numeroDocumento"));
+                    comprasDao.eliminar(numDocumento);
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                    break; 
+            }
+            request.getRequestDispatcher("Compras.jsp").forward(request, response);
+            }
+        else if (menu.equals("Producto")) {
             switch (accion) {
                 case "Listar":
                     List<Productos> listaProductos = productoDao.listar();

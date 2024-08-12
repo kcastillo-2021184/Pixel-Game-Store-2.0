@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Compras {
     private int numeroDocumento;
-    private Date fechaDocumento;
+    private String fechaDocumento;
     private String descripcion;
     private Double totalDocumento;
 
     public Compras() {
     }
 
-    public Compras(int numeroDocumento, Date fechaDocumento, String descripcion, Double totalDocumento) {
+    public Compras(int numeroDocumento, String fechaDocumento, String descripcion, Double totalDocumento) {
         this.numeroDocumento = numeroDocumento;
         this.fechaDocumento = fechaDocumento;
         this.descripcion = descripcion;
@@ -26,11 +26,11 @@ public class Compras {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public Date getFechaDocumento() {
+    public String getFechaDocumento() {
         return fechaDocumento;
     }
 
-    public void setFechaDocumento(Date fechaDocumento) {
+    public void setFechaDocumento(String fechaDocumento) {
         this.fechaDocumento = fechaDocumento;
     }
 
