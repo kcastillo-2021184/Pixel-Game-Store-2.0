@@ -11,6 +11,84 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Pagina Detalle Compra</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <style>
+        body {
+            background-color: #1a1a2e;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+        }
+        .container {
+            background-color: #16213e;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.2);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background-color: #0f3460;
+        }
+        .card-body {
+            background-color: #0f3460;
+        }
+        .form-control {
+            background-color: #16213e;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+        }
+        .form-control:focus {
+            border-color: #ffffff;
+            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+            background-color: #16213e;
+            color: #ffffff;
+        }
+        .btn {
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .btn-info {
+            background-color: #4d9de0;
+            border-color: #4d9de0;
+        }
+        .btn-success {
+            background-color: #3ec1d3;
+            border-color: #3ec1d3;
+        }
+        .btn-warning {
+            background-color: #f9b208;
+            border-color: #f9b208;
+        }
+        .btn-danger {
+            background-color: #e94560;
+            border-color: #e94560;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.3);
+        }
+        .table {
+            background-color: #16213e;
+            border-radius: 8px;
+            overflow: hidden;
+            color: #ffffff;
+        }
+        .table thead th {
+            background-color: #0f3460;
+            color: #ffffff;
+            border: none;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #1a1a2e;
+        }
+        h4 {
+            color: #3ec1d3;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        label {
+            color: #4d9de0;
+        }
+    </style>
     </head>
      <body>
    <div class="d-flex">

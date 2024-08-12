@@ -202,11 +202,13 @@ insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, co
 insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
     values ('Jorge', 'Castellanos', 'jcastellanos-2020387', 2020387, '2');
 insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
-    values ('Kevin', 'Castillo', 'kcastillo-2021184', 2021184, '2');
+    values ('Kevin', 'Castillo', 'kcastillo-2021184', 2021184, '1');
 insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
     values ('Hettson', 'Ceballos', 'hceballos-2020415', 2020415, '2');
 insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
     values ('Andrés', 'Coloma', 'acoloma-2023009', 2020009, '2');
+insert into Usuario(nombreUsuario, apellidoUsuario, usuarioLogin, contrasena, codigoTipoUsuario) 
+    values ('Cliente', 'CLIENTE', 'cliente2024', 'cliente123', '3');
  
 insert into Categoria(nombreCategoria, descripcionCategoria, localizacionCategoria) values ('a','a','a'); 
  

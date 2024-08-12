@@ -26,10 +26,14 @@ import modelo.Distribuidores;
 import modelo.DistribuidoresDAO;
 import modelo.EmailDistribuidor;
 import modelo.EmailDistribuidorDAO;
+import modelo.Empleados;
+import modelo.EmpleadosDAO;
 import modelo.Factura;
 import modelo.FacturaDAO;
 import modelo.Productos;
 import modelo.ProductosDAO;
+import modelo.TelefonoDistribuidor;
+import modelo.TelefonoDistribuidorDAO;
 import modelo.Usuario;
 import modelo.UsuarioDAO;
 
@@ -59,11 +63,15 @@ public class Controlador extends HttpServlet {
     Clientes clientes = new Clientes();
     ClientesDAO clientesDao = new ClientesDAO();
     int codDetalleCompra;
+    TelefonoDistribuidor telefonoDistribuidor = new TelefonoDistribuidor();
+    TelefonoDistribuidorDAO telefonoDistribuidorDao = new TelefonoDistribuidorDAO();
+    int codTelefonoDistribuidor;
+    Empleados empleado = new Empleados();
     Compras compras = new Compras();
     ComprasDAO comprasDao = new ComprasDAO();
     int numDocumento;
-    Usuario empleado = new Usuario();
-    UsuarioDAO empleadoDao = new UsuarioDAO();
+//    Usuario empleado = new Usuario();
+    EmpleadosDAO empleadoDao = new EmpleadosDAO();
     Categoria  categoria = new Categoria();
     CategoriaDAO categoriaDao = new CategoriaDAO();
     int item = 0;
@@ -85,7 +93,104 @@ public class Controlador extends HttpServlet {
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
         }else if(menu.equals("Home")){
             request.getRequestDispatcher("Home.jsp").forward(request, response);
+        }else if(menu.equals("Empleados")){
+            switch(accion){
+                case "Listar":
+                    List listaEmpleados = empleadoDao.listar();
+                    request.setAttribute("empleados", listaEmpleados);
+                    break;
+                case "Agregar":
+                    int codigoEmpleado = Integer.parseInt(request.getParameter("txtCodigoEmpleado"));
+                    String nombresEmpleado = request.getParameter("txtNombresEmpleado");
+                    String apellidosEmpleado = request.getParameter("txtApellidosEmpleado");
+                    Double sueldo = Double.parseDouble(request.getParameter("txtSueldo"));
+                    String direccionEmpleado = request.getParameter("txtDireccionEmpleado");
+                    int codigoCargoEmpleado = Integer.parseInt(request.getParameter("txtCodigoCargoEmpleado"));
+                    empleado.setCodigoEmpleado(codigoEmpleado);
+                    empleado.setNombresEmpleado(nombresEmpleado);
+                    empleado.setApellidosEmpleado(apellidosEmpleado);
+                    empleado.setSueldo(sueldo);
+                    empleado.setDireccionEmpleado(direccionEmpleado);
+                    empleado.setCodigoCargoEmpleado(codigoCargoEmpleado);
+                    empleadoDao.agregar(empleado);
+                    request.getRequestDispatcher("Controlador?menu=Empleados&accion=Listar").forward(request, response);
+                    break;
+                case "Editar":
+                    codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
+                    Empleados emp = empleadoDao.listarCodigoEmpleado(codEmpleado);
+                    request.setAttribute("Empleados", emp);
+                    request.getRequestDispatcher("Controlador?menu=Empleados&accion=Listar").forward(request, response);
+                    break;
+                case "Actualizar":
+                    String nombresEmp = request.getParameter("txtNombresEmpleado");
+                    String apellidosEmp = request.getParameter("txtApellidosEmpleado");
+                    Double pago = Double.parseDouble(request.getParameter("txtSueldo"));
+                    String direccionEmp = request.getParameter("txtDireccionEmpleado");
+                    int codCargoEmp = Integer.parseInt(request.getParameter("txtCodigoCargoEmpleado"));
+                    empleado.setCodigoEmpleado(codEmpleado); // Establecer el código del empleado
+                    empleado.setNombresEmpleado(nombresEmp);
+                    empleado.setApellidosEmpleado(apellidosEmp);
+                    empleado.setSueldo(pago);
+                    empleado.setDireccionEmpleado(direccionEmp);
+                    empleado.setCodigoCargoEmpleado(codCargoEmp);
+                    empleadoDao.actualizar(empleado);
+                    request.getRequestDispatcher("Controlador?menu=Empleados&accion=Listar").forward(request, response);
+                    break;
+                case "Eliminar":
+                    codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
+                    empleadoDao.eliminar(codEmpleado);
+                    request.getRequestDispatcher("Controlador?menu=Empleados&accion=Listar").forward(request, response);
+                    break; 
+            }
+            request.getRequestDispatcher("Empleado.jsp").forward(request, response);
         }
+        else if(menu.equals("TelefonoDistribuidor")){
+            switch(accion){
+                case "Listar":
+                        List listaTelefonoDistribuidor = telefonoDistribuidorDao.Listar();
+                        request.setAttribute("telefonoDistribuidor", listaTelefonoDistribuidor);
+                    break;
+                case "Agregar":
+                        String numeroPrincipal = request.getParameter("txtNumeroPrincipal");
+                        String numeroSecundario = request.getParameter("txtNumeroSecundario");
+                        String observaciones = request.getParameter("txtObservaciones");
+                        int codigoDistribuidor = Integer.parseInt(request.getParameter("txtCodigoDistribuidor"));
+                        telefonoDistribuidor.setNumeroPrincipal(numeroPrincipal);
+                        telefonoDistribuidor.setNumeroSecundario(numeroSecundario);
+                        telefonoDistribuidor.setObservaciones(observaciones);
+                        telefonoDistribuidor.setCodigoDistribuidor(codigoDistribuidor);
+                        telefonoDistribuidorDao.agregar(telefonoDistribuidor);
+                        request.getRequestDispatcher("Controlador?menu=TelefonoDistribuidor&accion=Listar").forward(request, response);
+                    break;
+                case "Editar":
+                        codTelefonoDistribuidor = Integer.parseInt(request.getParameter("codigoTelefonoDistribuidor"));
+                        TelefonoDistribuidor tel = telefonoDistribuidorDao.ListarCodigoTelefonoDistribuidor(codTelefonoDistribuidor);
+                        request.setAttribute("TelefonoDistribuidor", tel);
+                        request.getRequestDispatcher("Controlador?menu=TelefonoDistribuidor&accion=Listar").forward(request, response);
+                    break;
+                case "Actualizar":
+                        int codigoTelefonoDistribuidor = Integer.parseInt(request.getParameter("txtCodigoTelefonoDistribuidor"));
+                        String numeroPrincipalTel = request.getParameter("txtNumeroPrincipal");
+                        String numeroSecundarioTEl = request.getParameter("txtNumeroSecundario");
+                        String observacionesTel = request.getParameter("txtObservaciones");
+                        int codigoDistribuidorTe = Integer.parseInt(request.getParameter("txtCodigoDistribuidor"));
+                        telefonoDistribuidor.setCodigoTelefonoDistribuidor(codigoTelefonoDistribuidor);
+                        telefonoDistribuidor.setNumeroPrincipal(numeroPrincipalTel);
+                        telefonoDistribuidor.setNumeroSecundario(numeroSecundarioTEl);
+                        telefonoDistribuidor.setObservaciones(observacionesTel);
+                        telefonoDistribuidor.setCodigoDistribuidor(codigoDistribuidorTe);
+                        telefonoDistribuidorDao.Actualizar(telefonoDistribuidor);
+                        request.getRequestDispatcher("Controlador?menu=TelefonoDistribuidor&accion=Listar").forward(request, response);
+                    break;
+                    case "Eliminar":
+                        codTelefonoDistribuidor = Integer.parseInt(request.getParameter("codigoTelefonoDistribuidor"));
+                        telefonoDistribuidorDao.Eliminar(codTelefonoDistribuidor);
+                        request.getRequestDispatcher("Controlador?menu=TelefonoDistribuidor&accion=Listar").forward(request, response);
+                    break;
+                }
+                request.getRequestDispatcher("TelefonoDistribuidor.jsp").forward(request, response);
+            }
+        
         else if(menu.equals("Categoria")){
             switch(accion){
                 case "Listar":
@@ -346,7 +451,6 @@ public class Controlador extends HttpServlet {
                     request.getRequestDispatcher("Controlador?menu=CargoEmpleado&accion=Listar").forward(request, response);
                     break;
                 case "Actualizar":
-                    int codCargoEmpleado = Integer.parseInt(request.getParameter("codigoCargoEmpleado"));
                     String nombreCargo = request.getParameter("txtNombreCargo");
                     String descripcionCargo = request.getParameter("txtDescripcionCargo");
                     String turnoCargo = request.getParameter("txtTurno");
@@ -358,18 +462,20 @@ public class Controlador extends HttpServlet {
                     request.getRequestDispatcher("Controlador?menu=CargoEmpleado&accion=Listar").forward(request, response);
                     break;
                 case "Editar":
-                    int codigoCargoEmpleado = Integer.parseInt(request.getParameter("codigoCargoEmpleado"));
-                    CargoEmpleado ce = cargoempleadoDao.listarCargoEmpleado(codigoCargoEmpleado);
+                    codCargoEmpleado = Integer.parseInt(request.getParameter("codigoCargoEmpleado"));
+                    CargoEmpleado ce = cargoempleadoDao.listarCargoEmpleado(codCargoEmpleado);
                     request.setAttribute("cargoEmpleado", ce);
                     request.getRequestDispatcher("Controlador?menu=CargoEmpleado&accion=Listar").forward(request, response);
                     break;
                 case "Eliminar":
-                    int codigoEliminar = Integer.parseInt(request.getParameter("codigoCargoEmpleado"));
-                    cargoempleadoDao.eliminar(codigoEliminar);
+                    codCargoEmpleado = Integer.parseInt(request.getParameter("codigoCargoEmpleado"));
+                    cargoempleadoDao.eliminar(codCargoEmpleado);
                     request.getRequestDispatcher("Controlador?menu=CargoEmpleado&accion=Listar").forward(request, response);
                     break;
             }
-        }else if (menu.equals("Distribuidores")) {
+        }
+
+        else if (menu.equals("Distribuidores")) {
             switch(accion){
                 case "Listar":
                     // Lista todos los distribuidores
